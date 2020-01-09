@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AnswerBox" representedClassName="AnswerBox" syncable="YES" codeGenerationType="class">
+        <attribute name="answer" optional="YES" attributeType="String"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="answer" inverseEntity="Result"/>
+    </entity>
+    <entity name="ImageLink" representedClassName="ImageLink" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="imageLinks" inverseEntity="Result"/>
+    </entity>
+    <entity name="KnowledgeBox" representedClassName="KnowledgeBox" syncable="YES" codeGenerationType="class">
+        <attribute name="info" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="knowledge" inverseEntity="Result"/>
+    </entity>
+    <entity name="OrganicLink" representedClassName="OrganicLink" syncable="YES" codeGenerationType="class">
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="snippet" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="organicLinks" inverseEntity="Result"/>
+    </entity>
+    <entity name="Result" representedClassName="Result" syncable="YES" codeGenerationType="class">
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="answer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AnswerBox" inverseName="result" inverseEntity="AnswerBox"/>
+        <relationship name="imageLinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageLink" inverseName="result" inverseEntity="ImageLink"/>
+        <relationship name="knowledge" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="KnowledgeBox" inverseName="result" inverseEntity="KnowledgeBox"/>
+        <relationship name="organicLinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OrganicLink" inverseName="result" inverseEntity="OrganicLink"/>
+        <relationship name="videoLinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VideoLink" inverseName="result" inverseEntity="VideoLink"/>
+    </entity>
+    <entity name="VideoLink" representedClassName="VideoLink" syncable="YES" codeGenerationType="class">
+        <attribute name="channel" optional="YES" attributeType="String"/>
+        <attribute name="source" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="videoLinks" inverseEntity="Result"/>
+    </entity>
+    <elements>
+        <element name="AnswerBox" positionX="-118.16796875" positionY="24.39453125" width="128" height="103"/>
+        <element name="ImageLink" positionX="-81.17578125" positionY="-101.47265625" width="128" height="73"/>
+        <element name="KnowledgeBox" positionX="44.75" positionY="130.64453125" width="128" height="88"/>
+        <element name="OrganicLink" positionX="-446.98046875" positionY="75.8828125" width="128" height="103"/>
+        <element name="Result" positionX="-646.453125" positionY="-159.87109375" width="128" height="133"/>
+        <element name="VideoLink" positionX="-195.58203125" positionY="237.7421875" width="128" height="118"/>
+    </elements>
+</model>
