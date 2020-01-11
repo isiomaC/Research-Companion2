@@ -7,14 +7,19 @@
 //
 
 import Foundation
-
 import UIKit
+import XLPagerTabStrip
 
-class HistoryController: UIViewController{
+class HistoryController: UIViewController, IndicatorInfoProvider{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .cyan
         
         navigationItem.title = "History"
     }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "History")
+    }
+    
 }

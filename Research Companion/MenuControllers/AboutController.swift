@@ -8,13 +8,18 @@
 
 import Foundation
 import UIKit
+import XLPagerTabStrip
 
-class AboutController: UIViewController{
+class AboutController: UIViewController, IndicatorInfoProvider{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .cyan
         
         navigationItem.title = "About"
+    }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(image: UIImage(systemName: "star"))
     }
 }
 

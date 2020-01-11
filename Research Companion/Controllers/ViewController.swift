@@ -40,6 +40,18 @@ class ViewController: UIViewController {
     
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        view.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.isHidden = true
+    }
+    
     @objc func newResource(){
         navigationController?.pushViewController(AddResearchController(), animated: true)
     }

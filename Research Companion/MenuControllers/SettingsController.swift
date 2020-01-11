@@ -8,13 +8,18 @@
 
 import Foundation
 import UIKit
+import XLPagerTabStrip
 
-class SettingsController: UIViewController{
+class SettingsController: UIViewController, IndicatorInfoProvider{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .cyan
         
         
         navigationItem.title = "Settings"
+    }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Set")
     }
 }
