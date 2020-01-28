@@ -10,32 +10,32 @@ import Foundation
 import UIKit
 
 
-class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class MenuViewController: UIViewController{
+
     var table : UITableView!
     let cellId = "tableCell"
     let cellHeader = "tableHeader"
     var tagArray: [Int] = []
-    
+
     var active = false
-    
+
     var menuItem: [Section] = []
-    
+
     func initializeTable(){
-        
-        table = UITableView(frame: CGRect(x: 0, y: topbarHeight, width: menuScreenSize, height: screenSize.height))
+
+        table = UITableView(frame: CGRect(x: 0, y: topbarHeight, width: screenSize.width, height: screenSize.height))
         table.register(TableCell.self, forCellReuseIdentifier: cellId)
-        table.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: cellHeader)
+        table.register(TableHead.self, forHeaderFooterViewReuseIdentifier: cellHeader)
         table.delegate = self
         table.dataSource = self
         table.isScrollEnabled = false
-        table.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         table.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        table.separatorStyle = .none
-//        table.backgroundColor = .clear
+        table.separatorStyle = .none
+        table.backgroundColor = .clear
         view.addSubview(table)
     }
-    
+
     func createMenuItem(){
         menuItem = [
             Section(name: "Resources", items: nil, collapsed: nil, activea: nil),
@@ -44,7 +44,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             Section(name: "About", items: ["Acknowledgements"], collapsed: true),
             Section(name: "Rate Me", items: nil, collapsed: nil)
         ]
-            
+
     }
 
     override func viewDidLoad() {
@@ -59,46 +59,50 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //change Menu views bg color here
 //        view.backgroundColor = UIColor.black
-        
+
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+
         if let collapsed = menuItem[section].collapsed  {
              return (collapsed ? 0 : menuItem[section].items!.count)
         }
         return 0
     }
-   
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
+
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! TableCell
-        
+
         let item = menuItem[indexPath.section].items![indexPath.row]
         cell.label1.text = item
         cell.accessoryType = .disclosureIndicator
         return cell
     }
-    
-    
+
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+
         if let collapsed = menuItem[indexPath.section].collapsed{
-            
+
             if collapsed == true{
                 return 0
             }
         }
-        return 80
+        return 40
     }
-   
-        
+
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         print( indexPath.section,  indexPath.row)
 
         if let menu = menuItem[indexPath.section].items?[indexPath.row] {
-            
+
             if menu == "Links"{
                 print(menu)
                 navigationController?.pushViewController(HistoryController(), animated: true)
@@ -120,57 +124,63 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return menuItem.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: cellHeader) as! TableHeader
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: cellHeader) as! TableHead
            tagArray.append(section)
            headerView.tag = section
-           headerView.label1.text = menuItem[section].name
-    
-           if let items = menuItem[section].items{
-               if !items.isEmpty{
-                   headerView.imageView1.image = UIImage(named: "arrow")?.withTintColor(.white)
-               }
-           }
-    
+           headerView.label.text = menuItem[section].name
+
+//           if let items = menuItem[section].items{
+//               if !items.isEmpty{
+//                   headerView.imageView1.image = UIImage(named: "arrow")?.withTintColor(.white)
+//               }
+//           }
+
            let tap = UITapGestureRecognizer(target: self, action: #selector(expandMenu))
-        
-        
+
+
            headerView.isUserInteractionEnabled = true
            headerView.addGestureRecognizer(tap)
-    
-           if let collapsed = menuItem[section].collapsed{
-            headerView.imageView1.transform = headerView.imageView1.transform.rotated(by: collapsed ? 0.0 : CGFloat(Double.pi))
-           }
-    
+
+//           if let collapsed = menuItem[section].collapsed{
+//            headerView.imageView1.transform = headerView.imageView1.transform.rotated(by: collapsed ? 0.0 : CGFloat(Double.pi))
+//           }
+
         return headerView
     }
-    
+
 //    [Assert] Unable to determine new global row index for preReloadFirstVisibleRow (0)
-    
+
     //fix warning, it happens beacouse after collasing the cell rows, the table view cant
     //determine its current section index so its goes back top "0"
-    
+
     @objc func expandMenu(sender: UITapGestureRecognizer){
           let tag = sender.view!.tag
-    
+
           print("tappedd \(tag)")
-        
+
           if let collapsed = menuItem[tag].collapsed {
                 menuItem[tag].collapsed = !collapsed
                 table.reloadSections(NSIndexSet(index: tag) as IndexSet, with: .automatic)
           }
-        
+
           if menuItem[tag].name == "Resources"{
               navigationController?.pushViewController(ResourceController(), animated: true)
           }else if menuItem[tag].name == "Rate Me"{
               navigationController?.pushViewController(RateMeController(), animated: true)
           }
     }
+}
+
+
+
+extension MenuViewController: UITableViewDelegate, UITableViewDataSource{
+    
 }
 
 //MARK :- Extensions

@@ -61,23 +61,23 @@ class ViewController: UIViewController {
     }
     
     @objc func openMenu(){
-        let menu = SideMenuNavigationController(rootViewController: MenuViewController())
-        SideMenuManager.default.leftMenuNavigationController = menu
-        
-        SideMenuManager.default.leftMenuNavigationController?.statusBarEndAlpha = 0
-        SideMenuManager.default.leftMenuNavigationController?.presentationStyle.menuScaleFactor = 1
-        SideMenuManager.default.leftMenuNavigationController?.presentationStyle.onTopShadowOpacity = 2
-        
-//          SideMenuManager.default.leftMenuNavigationController?.presentationStyle.presentingScaleFactor = 0.9
-        
-//        SideMenuManager.default.leftMenuNavigationController?.blurEffectStyle = .dark
-//        SideMenuManager.default.leftMenuNavigationController?.presentationStyle = .slide
-        
-        SideMenuManager.default.leftMenuNavigationController?.menuWidth = menuScreenSize
-        print(menu)
+//        let menu = SideMenuNavigationController(rootViewController: MenuViewController())
+//        SideMenuManager.default.leftMenuNavigationController = menu
+//
+//        SideMenuManager.default.leftMenuNavigationController?.statusBarEndAlpha = 0
+//        SideMenuManager.default.leftMenuNavigationController?.presentationStyle.menuScaleFactor = 1
+//        SideMenuManager.default.leftMenuNavigationController?.presentationStyle.onTopShadowOpacity = 2
+//
+////          SideMenuManager.default.leftMenuNavigationController?.presentationStyle.presentingScaleFactor = 0.9
+//
+////        SideMenuManager.default.leftMenuNavigationController?.blurEffectStyle = .dark
+////        SideMenuManager.default.leftMenuNavigationController?.presentationStyle = .slide
+//
+//        SideMenuManager.default.leftMenuNavigationController?.menuWidth = menuScreenSize
+//        print(menu)
         print("Tapped")
         
-        present(menu, animated: true, completion: nil)
+//        present(menu, animated: true, completion: nil)
     }
 }
 

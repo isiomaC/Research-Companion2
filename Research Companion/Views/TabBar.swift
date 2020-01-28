@@ -25,7 +25,11 @@ class TabBar: UITabBarController, UITabBarControllerDelegate {
         let sentimentTabIcon = UITabBarItem(title: "Sentiment", image: UIImage(systemName: "circle.grid.hex.fill"), tag: 1)
         sentimentController.tabBarItem = sentimentTabIcon
         
-        let tabControllers = [homeController, sentimentController]
+        let menuController = MenuViewController()
+        let menuTabIcon = UITabBarItem(title: "Menu", image: UIImage(systemName:"text.justifyright"), tag: 2)
+        menuController.tabBarItem = menuTabIcon
+        
+        let tabControllers = [homeController, sentimentController, menuController]
         self.viewControllers = tabControllers.map({ (viewController) in
             UINavigationController(rootViewController: viewController)
         })

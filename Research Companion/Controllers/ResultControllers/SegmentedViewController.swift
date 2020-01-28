@@ -13,6 +13,8 @@ import MXSegmentedPager
 
 class SegmentedViewController: MXSegmentedPagerController{
     
+    let data = ["videos", "pdf", "images", "links"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,33 +24,25 @@ class SegmentedViewController: MXSegmentedPagerController{
         v.image = UIImage(named: "test")
         v.contentMode = .scaleAspectFill
         
-        let topView = UIView()
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        let ref = segmentedPager.parallaxHeader.view
-        
-        topView.addConstraints(top: ref?.topAnchor, topConstant: 0, bottom: ref?.bottomAnchor, leading: ref?.leadingAnchor, trailing: ref?.trailingAnchor, constant: 0)
-        topView.backgroundColor = .green
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
-        topView.addGestureRecognizer(tap)
      
         let res = ResultsView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 200))
-//        res.snippetLabel
+        
+        let imgView = UIImageView()
+        imgView.image = UIImage(named: "test")
         
         
-        segmentedPager.parallaxHeader.view = res.snippetLabel
+//        segmentedPager.parallaxHeader.view = imgView
+//        segmentedPager.parallaxHeader.height = 200
+//        segmentedPager.parallaxHeader.mode = .center
+//        segmentedPager.parallaxHeader.minimumHeight = screenSize.height/3
         
-        ref?.translatesAutoresizingMaskIntoConstraints = false
-        ref?.addConstraints(top: nil, topConstant: 0, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, constant: 20)
-        segmentedPager.parallaxHeader.height = 200
-        segmentedPager.parallaxHeader.mode = .center
-        segmentedPager.parallaxHeader.minimumHeight = screenSize.height/3
-        
-
+        segmentedPager.scrollToTop(animated: true)
         segmentedPager.segmentedControl.indicator.linePosition = .bottom
         segmentedPager.segmentedControl.textColor = .white
         segmentedPager.segmentedControl.selectedTextColor = .red
         segmentedPager.segmentedControl.indicator.lineView.backgroundColor = .red
+        segmentedPager.segmentedControl.bounces = true
        
     }
     
@@ -57,7 +51,7 @@ class SegmentedViewController: MXSegmentedPagerController{
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return ["videos", "pdf", "images", "links"][index]
+        return data[index]
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
@@ -69,15 +63,21 @@ class SegmentedViewController: MXSegmentedPagerController{
     }
     
     override func segmentedPagerShouldScrollToTop(_ segmentedPager: MXSegmentedPager) -> Bool {
-        return false
+        return true
     }
     
-    override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewForPageAt index: Int) -> UIView {
-        //set views here
-        let l = UILabel()
-        l.text = "Page \(index)"
-        return l
+    override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewControllerForPageAt index: Int) -> UIViewController {
+        
+        if data[index] == "videos"{
+            let v = SentimentViewController()
+           
+            return v
+        }
+        
+        return FavoritesViewController()
     }
+    
+
 }
 
 extension SegmentedViewController{

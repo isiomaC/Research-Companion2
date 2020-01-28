@@ -15,7 +15,7 @@ class TableCell: UITableViewCell{
         var lab = UILabel()
         lab.textAlignment = .justified
         lab.textColor = .white
-        lab.font = UIFont.boldSystemFont(ofSize: 18)
+        lab.font = UIFont.boldSystemFont(ofSize: 13)
         lab.numberOfLines = 0
         lab.backgroundColor = UIColor(red: 162/255, green: 132/255, blue: 94/255, alpha: 0.2)
         return lab
@@ -32,7 +32,7 @@ class TableCell: UITableViewCell{
         label1.translatesAutoresizingMaskIntoConstraints = false
         label1.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
         label1.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
-        label1.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        label1.heightAnchor.constraint(equalToConstant: 40).isActive = true
         label1.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
     
     }
