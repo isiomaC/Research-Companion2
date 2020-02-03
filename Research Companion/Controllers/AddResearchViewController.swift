@@ -152,6 +152,20 @@ class AddResearchController: UIViewController, UITextFieldDelegate{
         testArray = [6,9,9,9,0,7,5,5]
         
         downloadProgress = ResourceGenerator.shared.getResource(queryString: queryString)
+        
+//        ResourceGenerator.shared.postGetArticle(byId: [161432985])
+        
+        ResourceGenerator.shared.postDownloadArticle { (data, success) in
+            if success {
+                print("Printing from submit button>>>", data)
+                let testingpdfView = PdfViewController()
+                testingpdfView.delegate = self
+                testingpdfView.data = data
+                self.navigationController?.pushViewController(testingpdfView, animated: true)
+            }
+        }
+        
+//         ResourceGenerator.shared.postGetJournal(byIssn: ["issn:2165-4069", "issn:0975-900X", "issn:1137-3601" ])
 
 //        if let d = ResourceGenerator.shared.data{
 //            let json = try! JSON(data: d)
@@ -233,8 +247,11 @@ class AddResearchController: UIViewController, UITextFieldDelegate{
 //            vc.videos = videoModelArray
             vc.testArray = testArray
         
+            //set view pager back after tesing pdf view
             let vc2 = SegmentedViewController()
-            navigationController?.pushViewController(vc2, animated: true)
+
+//            navigationController?.pushViewController(vc2, animated: true)
+            
 //        }
     }
     
@@ -252,10 +269,14 @@ class AddResearchController: UIViewController, UITextFieldDelegate{
     }
 }
 
-extension AddResearchController: dataPassedBetweenControllers{
+extension AddResearchController: dataPassedBetweenControllers, pdfDataGottenFromSendingView {
     
     func sendBackToParent(testArray: [Int]) {
         print(testArray)
+    }
+    
+    func sendBack(gotData: Int) {
+        print(gotData)
     }
     
 }

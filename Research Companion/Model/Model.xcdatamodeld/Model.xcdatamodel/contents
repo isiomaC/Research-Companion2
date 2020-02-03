@@ -6,9 +6,40 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="answer" inverseEntity="Result"/>
     </entity>
+    <entity name="Article" representedClassName="Article" syncable="YES" codeGenerationType="class">
+        <attribute name="abstract" optional="YES" attributeType="String"/>
+        <attribute name="authors" optional="YES" attributeType="String"/>
+        <attribute name="contributors" optional="YES" attributeType="String"/>
+        <attribute name="datePublished" optional="YES" attributeType="String"/>
+        <attribute name="doi" optional="YES" attributeType="String"/>
+        <attribute name="downloadUrl" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="oai" optional="YES" attributeType="String"/>
+        <attribute name="publisher" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="ImageLink" representedClassName="ImageLink" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String"/>
         <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="imageLinks" inverseEntity="Result"/>
+    </entity>
+    <entity name="JIdentifier" representedClassName="JIdentifier" syncable="YES" codeGenerationType="class">
+        <attribute name="issn" optional="YES" attributeType="String"/>
+        <attribute name="oai" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="journal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="identifiers" inverseEntity="Journal"/>
+    </entity>
+    <entity name="Journal" representedClassName="Journal" syncable="YES" codeGenerationType="class">
+        <attribute name="language" optional="YES" attributeType="String"/>
+        <attribute name="publisher" optional="YES" attributeType="String"/>
+        <attribute name="rights" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="identifiers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JIdentifier" inverseName="journal" inverseEntity="JIdentifier"/>
+        <relationship name="subjects" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JSubject" inverseName="journal" inverseEntity="JSubject"/>
+    </entity>
+    <entity name="JSubject" representedClassName="JSubject" syncable="YES" codeGenerationType="class">
+        <attribute name="subs" optional="YES" attributeType="String"/>
+        <relationship name="journal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="subjects" inverseEntity="Journal"/>
     </entity>
     <entity name="KnowledgeBox" representedClassName="KnowledgeBox" syncable="YES" codeGenerationType="class">
         <attribute name="info" optional="YES" attributeType="String"/>
@@ -38,7 +69,11 @@
     </entity>
     <elements>
         <element name="AnswerBox" positionX="-118.16796875" positionY="24.39453125" width="128" height="103"/>
+        <element name="Article" positionX="-414" positionY="18" width="128" height="208"/>
         <element name="ImageLink" positionX="-81.17578125" positionY="-101.47265625" width="128" height="73"/>
+        <element name="JIdentifier" positionX="-674.46484375" positionY="93.1015625" width="128" height="103"/>
+        <element name="Journal" positionX="-704.88671875" positionY="274.734375" width="128" height="133"/>
+        <element name="JSubject" positionX="-499.2734375" positionY="203.91796875" width="128" height="73"/>
         <element name="KnowledgeBox" positionX="44.75" positionY="130.64453125" width="128" height="88"/>
         <element name="OrganicLink" positionX="-446.98046875" positionY="75.8828125" width="128" height="103"/>
         <element name="Result" positionX="-646.453125" positionY="-159.87109375" width="128" height="133"/>

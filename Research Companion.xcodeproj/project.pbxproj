@@ -42,6 +42,11 @@
 		13BB370A23B65B6800598891 /* Research_CompanionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB370923B65B6800598891 /* Research_CompanionUITests.swift */; };
 		13BB371923B675C900598891 /* HomeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB371823B675C900598891 /* HomeButton.swift */; };
 		13C6F96F23C6067700DB40FD /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C6F96E23C6067700DB40FD /* CollectionCell.swift */; };
+		13D9501823E7229B001E87A3 /* JOSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9501723E7229B001E87A3 /* JOSubject.swift */; };
+		13D9501A23E722D1001E87A3 /* JOIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D9501923E722D1001E87A3 /* JOIdentifier.swift */; };
+		13DE47C623E72744009E4471 /* JOIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DE47C523E72744009E4471 /* JOIdentifiers.swift */; };
+		13DE47C823E72753009E4471 /* JOSubjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DE47C723E72753009E4471 /* JOSubjects.swift */; };
+		13DE47CA23E7366F009E4471 /* Apikeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13DE47C923E7366F009E4471 /* Apikeys.plist */; };
 		13E3484623B8C5850007C0B0 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3484523B8C5850007C0B0 /* TabBar.swift */; };
 		13E3484823B8CD920007C0B0 /* SentimentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3484723B8CD920007C0B0 /* SentimentViewController.swift */; };
 		13E3484A23B8D6180007C0B0 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E3484923B8D6180007C0B0 /* MenuViewController.swift */; };
@@ -110,6 +115,11 @@
 		13BB370B23B65B6800598891 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13BB371823B675C900598891 /* HomeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButton.swift; sourceTree = "<group>"; };
 		13C6F96E23C6067700DB40FD /* CollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
+		13D9501723E7229B001E87A3 /* JOSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JOSubject.swift; sourceTree = "<group>"; };
+		13D9501923E722D1001E87A3 /* JOIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JOIdentifier.swift; sourceTree = "<group>"; };
+		13DE47C523E72744009E4471 /* JOIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JOIdentifiers.swift; sourceTree = "<group>"; };
+		13DE47C723E72753009E4471 /* JOSubjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JOSubjects.swift; sourceTree = "<group>"; };
+		13DE47C923E7366F009E4471 /* Apikeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Apikeys.plist; sourceTree = "<group>"; };
 		13E3484523B8C5850007C0B0 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		13E3484723B8CD920007C0B0 /* SentimentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentimentViewController.swift; sourceTree = "<group>"; };
 		13E3484923B8D6180007C0B0 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +221,7 @@
 		13B0E70523BBAA0600AD9B75 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				13DE47C423E72695009E4471 /* Journals */,
 				13B0E71423C3546300AD9B75 /* Model.xcdatamodeld */,
 				13B0E71923C35F1D00AD9B75 /* VideoLinks.swift */,
 				13B0E71723C35E8B00AD9B75 /* OrganicLinks.swift */,
@@ -263,6 +274,7 @@
 				13BB36E923B65B6400598891 /* SceneDelegate.swift */,
 				13BB36ED23B65B6400598891 /* Main.storyboard */,
 				13BB36F023B65B6700598891 /* Assets.xcassets */,
+				13DE47C923E7366F009E4471 /* Apikeys.plist */,
 				13BB36F223B65B6700598891 /* LaunchScreen.storyboard */,
 				13BB36F523B65B6700598891 /* Info.plist */,
 				13B0E70E23BD035900AD9B75 /* videoObject.swift */,
@@ -300,6 +312,17 @@
 				13B0E71D23C3608E00AD9B75 /* DisplayResultsController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		13DE47C423E72695009E4471 /* Journals */ = {
+			isa = PBXGroup;
+			children = (
+				13D9501723E7229B001E87A3 /* JOSubject.swift */,
+				13D9501923E722D1001E87A3 /* JOIdentifier.swift */,
+				13DE47C523E72744009E4471 /* JOIdentifiers.swift */,
+				13DE47C723E72753009E4471 /* JOSubjects.swift */,
+			);
+			path = Journals;
 			sourceTree = "<group>";
 		};
 		B4CA57D4F56246654E98E6AC /* Frameworks */ = {
@@ -435,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13BB36F423B65B6700598891 /* LaunchScreen.storyboard in Resources */,
+				13DE47CA23E7366F009E4471 /* Apikeys.plist in Resources */,
 				13BB36F123B65B6700598891 /* Assets.xcassets in Resources */,
 				13BB36EF23B65B6400598891 /* Main.storyboard in Resources */,
 			);
@@ -576,14 +600,17 @@
 				13E3484A23B8D6180007C0B0 /* MenuViewController.swift in Sources */,
 				1331204323B6ABDA007275A3 /* AddResearchViewController.swift in Sources */,
 				13BB36EA23B65B6400598891 /* SceneDelegate.swift in Sources */,
+				13DE47C623E72744009E4471 /* JOIdentifiers.swift in Sources */,
 				137CA05A23DF91F600310CE2 /* PdfViewController.swift in Sources */,
 				13C6F96F23C6067700DB40FD /* CollectionCell.swift in Sources */,
+				13D9501823E7229B001E87A3 /* JOSubject.swift in Sources */,
 				13B0E71623C3546300AD9B75 /* Model.xcdatamodeld in Sources */,
 				135F8E4323B90163008F95AB /* HistoryController.swift in Sources */,
 				13E3484823B8CD920007C0B0 /* SentimentViewController.swift in Sources */,
 				13B0E71823C35E8B00AD9B75 /* OrganicLinks.swift in Sources */,
 				135F8E4E23BA297B008F95AB /* RateMeController.swift in Sources */,
 				135F8E4523B90172008F95AB /* SettingsController.swift in Sources */,
+				13D9501A23E722D1001E87A3 /* JOIdentifier.swift in Sources */,
 				137CA05823DF91DC00310CE2 /* VideosViewController.swift in Sources */,
 				13B0E71E23C3608E00AD9B75 /* DisplayResultsController.swift in Sources */,
 				13E3484623B8C5850007C0B0 /* TabBar.swift in Sources */,
@@ -598,6 +625,7 @@
 				13B0E70F23BD035900AD9B75 /* videoObject.swift in Sources */,
 				137CA05E23DF921100310CE2 /* LinksViewController.swift in Sources */,
 				1380DDFD23C75DC800746A76 /* SegmentedViewController.swift in Sources */,
+				13DE47C823E72753009E4471 /* JOSubjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

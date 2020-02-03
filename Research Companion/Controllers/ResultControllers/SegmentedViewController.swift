@@ -13,23 +13,17 @@ import MXSegmentedPager
 
 class SegmentedViewController: MXSegmentedPagerController{
     
-    let data = ["videos", "pdf", "images", "links"]
+    let pagerData = ["videos", "pdf", "images", "links"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.hidesBarsOnSwipe = true
         
-        let v = UIImageView()
-        v.image = UIImage(named: "test")
-        v.contentMode = .scaleAspectFill
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
      
         let res = ResultsView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 200))
-        
-        let imgView = UIImageView()
-        imgView.image = UIImage(named: "test")
         
         
 //        segmentedPager.parallaxHeader.view = imgView
@@ -51,7 +45,7 @@ class SegmentedViewController: MXSegmentedPagerController{
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
-        return data[index]
+        return pagerData[index]
     }
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, didScrollWith parallaxHeader: MXParallaxHeader) {
@@ -68,13 +62,21 @@ class SegmentedViewController: MXSegmentedPagerController{
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewControllerForPageAt index: Int) -> UIViewController {
         
-        if data[index] == "videos"{
-            let v = SentimentViewController()
-           
-            return v
+        if pagerData[index] == "videos"{
+            let viewC = SentimentViewController()
+            return viewC
+            
+        }else if pagerData[index] == "pdf"{
+            let viewC = PdfViewController()
+            return viewC
+            
+        }else if pagerData[index] == "images"{
+            let viewC = ImagesViewController()
+            return viewC
+            
         }
         
-        return FavoritesViewController()
+        return LinksViewController()
     }
     
 
