@@ -10,7 +10,6 @@ import UIKit
 import PDFKit
 
 protocol pdfDataGottenFromSendingView {
-    
     //might not use this function
     //pass 1 back if data was gotten successfully, pass 0 if otherwise
     func sendBack(gotData: Int)
@@ -33,7 +32,7 @@ class PdfViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Printing from pdfViewController", data)
+        print("Printing from pdfViewController", data as Any)
         view.addSubview(pdfView)
         pdfView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         pdfView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
@@ -43,8 +42,7 @@ class PdfViewController: UIViewController {
         if let document = PDFDocument(data: data!){
             pdfView.document = document
         }
-
-        // Do any additional setup after loading the view.
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

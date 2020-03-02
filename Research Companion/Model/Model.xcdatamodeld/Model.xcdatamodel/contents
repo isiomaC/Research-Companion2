@@ -18,6 +18,7 @@
         <attribute name="publisher" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="research" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Research" inverseName="articles" inverseEntity="Research"/>
     </entity>
     <entity name="ImageLink" representedClassName="ImageLink" syncable="YES" codeGenerationType="class">
         <attribute name="image" optional="YES" attributeType="String"/>
@@ -35,6 +36,7 @@
         <attribute name="rights" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="identifiers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JIdentifier" inverseName="journal" inverseEntity="JIdentifier"/>
+        <relationship name="research" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Research" inverseName="journals" inverseEntity="Research"/>
         <relationship name="subjects" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="JSubject" inverseName="journal" inverseEntity="JSubject"/>
     </entity>
     <entity name="JSubject" representedClassName="JSubject" syncable="YES" codeGenerationType="class">
@@ -51,6 +53,12 @@
         <attribute name="snippet" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Result" inverseName="organicLinks" inverseEntity="Result"/>
+    </entity>
+    <entity name="Research" representedClassName="Research" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="queryString" optional="YES" attributeType="String"/>
+        <relationship name="articles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Article" inverseName="research" inverseEntity="Article"/>
+        <relationship name="journals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Journal" inverseName="research" inverseEntity="Journal"/>
     </entity>
     <entity name="Result" representedClassName="Result" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String"/>
@@ -69,14 +77,15 @@
     </entity>
     <elements>
         <element name="AnswerBox" positionX="-118.16796875" positionY="24.39453125" width="128" height="103"/>
-        <element name="Article" positionX="-414" positionY="18" width="128" height="208"/>
+        <element name="Article" positionX="106.25" positionY="-137.0234375" width="128" height="223"/>
         <element name="ImageLink" positionX="-81.17578125" positionY="-101.47265625" width="128" height="73"/>
         <element name="JIdentifier" positionX="-674.46484375" positionY="93.1015625" width="128" height="103"/>
-        <element name="Journal" positionX="-704.88671875" positionY="274.734375" width="128" height="133"/>
+        <element name="Journal" positionX="-704.88671875" positionY="274.734375" width="128" height="148"/>
         <element name="JSubject" positionX="-499.2734375" positionY="203.91796875" width="128" height="73"/>
         <element name="KnowledgeBox" positionX="44.75" positionY="130.64453125" width="128" height="88"/>
         <element name="OrganicLink" positionX="-446.98046875" positionY="75.8828125" width="128" height="103"/>
-        <element name="Result" positionX="-646.453125" positionY="-159.87109375" width="128" height="133"/>
+        <element name="Result" positionX="-696.1015625" positionY="-547.96484375" width="128" height="133"/>
         <element name="VideoLink" positionX="-195.58203125" positionY="237.7421875" width="128" height="118"/>
+        <element name="Research" positionX="-897.05859375" positionY="-185.3671875" width="128" height="103"/>
     </elements>
 </model>

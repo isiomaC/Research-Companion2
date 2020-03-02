@@ -17,4 +17,5 @@ class ImageLinks{
         var instance = ImageLinks()
         return instance
     }()
+    
 }

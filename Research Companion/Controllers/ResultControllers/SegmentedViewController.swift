@@ -11,31 +11,45 @@ import UIKit
 import XLPagerTabStrip
 import MXSegmentedPager
 
+protocol SegmentedControllerDataSource {
+    func sendBackData()
+}
+
 class SegmentedViewController: MXSegmentedPagerController{
     
-    let pagerData = ["videos", "pdf", "images", "links"]
+    let pagerData = ["articles", "journals"]
+    
+    var articleData : [MyArticle]?
+    
+    var journalData : [MyJournal]?
+    
+    var researchName : String?
+    
+    var queryString: String?
+    
+    var delegate : SegmentedControllerDataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.hidesBarsOnSwipe = true
+        print("Article Data from SegmentedController", articleData!.count)
+
+        if let jdata = journalData{
+            print("Journal data from SegmentedController", jdata.count)
+        }
         
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
-     
-        let res = ResultsView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 200))
-        
+//        navigationController?.hidesBarsOnSwipe = true
         
 //        segmentedPager.parallaxHeader.view = imgView
 //        segmentedPager.parallaxHeader.height = 200
 //        segmentedPager.parallaxHeader.mode = .center
 //        segmentedPager.parallaxHeader.minimumHeight = screenSize.height/3
-        
+    
         segmentedPager.scrollToTop(animated: true)
         segmentedPager.segmentedControl.indicator.linePosition = .bottom
         segmentedPager.segmentedControl.textColor = .white
-        segmentedPager.segmentedControl.selectedTextColor = .red
-        segmentedPager.segmentedControl.indicator.lineView.backgroundColor = .red
+        segmentedPager.segmentedControl.selectedTextColor = .systemBlue
+        segmentedPager.segmentedControl.indicator.lineView.backgroundColor = .systemBlue
         segmentedPager.segmentedControl.bounces = true
        
     }
@@ -53,7 +67,7 @@ class SegmentedViewController: MXSegmentedPagerController{
     }
     
     override func numberOfPages(in segmentedPager: MXSegmentedPager) -> Int {
-        return 4
+        return pagerData.count
     }
     
     override func segmentedPagerShouldScrollToTop(_ segmentedPager: MXSegmentedPager) -> Bool {
@@ -62,23 +76,21 @@ class SegmentedViewController: MXSegmentedPagerController{
     
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewControllerForPageAt index: Int) -> UIViewController {
         
-        if pagerData[index] == "videos"{
-            let viewC = SentimentViewController()
-            return viewC
-            
-        }else if pagerData[index] == "pdf"{
-            let viewC = PdfViewController()
-            return viewC
-            
-        }else if pagerData[index] == "images"{
-            let viewC = ImagesViewController()
-            return viewC
-            
+        
+        if pagerData[index] == "articles"{
+            let articleController = ArticleViewController()
+            self.addChild(articleController)
+            articleController.articleData = articleData
+            articleController.queryString = queryString
+            articleController.researchName = researchName
+            return articleController
         }
         
-        return LinksViewController()
+        let journalController = JournalViewController()
+        self.addChild(journalController)
+        journalController.journalData = journalData
+        return journalController
     }
-    
 
 }
 

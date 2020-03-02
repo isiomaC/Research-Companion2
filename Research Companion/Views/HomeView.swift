@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 let screenSize = UIScreen.main.bounds
-let heightOffset = screenSize.height/2
-let yPos = (heightOffset/2) + 50
+let halfScreenHeight = screenSize.height/2
+let yPos = (halfScreenHeight/2) + 50
 
 class HomeView: UIView {
     

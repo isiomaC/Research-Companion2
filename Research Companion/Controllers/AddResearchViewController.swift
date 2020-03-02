@@ -11,16 +11,9 @@ import UIKit
 import SwiftyJSON
 import CoreData
 
-class AddResearchController: UIViewController, UITextFieldDelegate{
+class AddResearchController: MyViewController, UITextFieldDelegate{
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
-    var knowlegdeModel: KnowledgeBox?
-    var answerModel: AnswerBox?
-    var resultModel: Result?
-    var organicModelArray = [OrganicLink]()
-    var imageModelArray = [ImageLink]()
-    var videoModelArray = [VideoLink]()
     var testArray = [Int]()
     
     var tabBarHeight: CGFloat?
@@ -155,102 +148,49 @@ class AddResearchController: UIViewController, UITextFieldDelegate{
         
 //        ResourceGenerator.shared.postGetArticle(byId: [161432985])
         
-        ResourceGenerator.shared.postDownloadArticle { (data, success) in
+        let resultVC = SegmentedViewController()
+        resultVC.delegate = self
+        
+        startActivityIndicator()
+        
+        ResourceGenerator.shared.postSearchArticles(query: ["query": queryString]) { (articles, success) in
             if success {
-                print("Printing from submit button>>>", data)
-                let testingpdfView = PdfViewController()
-                testingpdfView.delegate = self
-                testingpdfView.data = data
-                self.navigationController?.pushViewController(testingpdfView, animated: true)
+                self.stopActivityIndicator()
+                resultVC.articleData = articles
+                resultVC.researchName = self.researchName
+                print(articles)
+                print(success)
+                resultVC.queryString = self.queryString
+                self.navigationController?.pushViewController(resultVC, animated: true)
+            }else{
+                
+                print(success)
+                self.stopActivityIndicator()
+                
+                //MARK: - display error message in as a toast..
+                
+                print("failed to retrieve data")
+            }
+        }
+        
+        
+        ResourceGenerator.shared.postSearchJournals(postBody: ["query": queryString]) { (journals, success) in
+            if success {
+                resultVC.journalData = journals
+            }else{
+                print("failed to retrieve data")
             }
         }
         
 //         ResourceGenerator.shared.postGetJournal(byIssn: ["issn:2165-4069", "issn:0975-900X", "issn:1137-3601" ])
 
-//        if let d = ResourceGenerator.shared.data{
-//            let json = try! JSON(data: d)
+//            let vc = DisplayResultsController()
+//            vc.title = researchName
+//            vc.delegate = self
 //
-//            _ = json["status"]
-//
-//            let answerBoxJson = json["results"]["results"]["answer_box"]
-//            let imagesJson = json["results"]["results"]["inline_images"]
-//            let videosJson = json["results"]["results"]["inline_videos"]
-//            let knowledgeCardJson = json["results"]["results"]["knowledge_card"]
-//            let organicLinksJson = json["results"]["results"]["organic"]
-//
-//            resultModel = Result(context: self.context)
-//            resultModel?.title = "Results for \(queryString)"
-//
-//            answerModel = AnswerBox(context: self.context)
-//            answerModel?.title = answerBoxJson["title"].stringValue
-//            answerModel?.answer = answerBoxJson["answer"].stringValue
-//            answerModel?.link = answerBoxJson["link"].stringValue
-//            answerModel?.result = resultModel
-//            resultModel?.answer = answerModel
-//
-//            imagesJson.arrayValue.forEach { (image) in
-//
-//                print("Image Key:--------->  ::\(image["image"].stringValue)")
-//                let imag = ImageLink(context: self.context)
-//                if image["image"] == JSON.null {
-//                    print("Null detected")
-//                }else{
-//                    imag.image = image["image"].stringValue
-//                    imag.result = resultModel
-//                    imageModelArray.append(imag)
-//                }
-//                print("image Context: ______> \(String(describing: imag.image))")
-//
-//
-//                resultModel?.addToImageLinks(imag)
-//            }
-//
-//            print(imageModelArray.count)
-//            print(imageModelArray)
-//
-//            for key in videosJson.arrayValue{
-//                let videoLink = VideoLink(context: self.context)
-//                videoLink.title = key["title"].stringValue
-//                videoLink.url = key["url"].stringValue
-//                videoLink.channel = key["channel"].stringValue
-//                videoLink.source = key["source"].stringValue
-//                videoLink.result = resultModel
-//                videoModelArray.append(videoLink)
-//                resultModel?.addToVideoLinks(videoLink)
-//            }
-//
-//            knowlegdeModel = KnowledgeBox(context: self.context)
-//            knowlegdeModel?.title = knowledgeCardJson["title"].stringValue
-//            knowlegdeModel?.info = knowledgeCardJson["info"].stringValue
-//            knowlegdeModel?.result = resultModel
-//            resultModel?.knowledge = knowlegdeModel
-//
-//            organicLinksJson.arrayValue.forEach { (links) in
-//                let organic = OrganicLink(context: self.context)
-//                organic.link = links["link"].stringValue
-//                organic.title = links["title"].stringValue
-//                organic.snippet = links["snippet"].stringValue
-//                organic.result = resultModel
-//                organicModelArray.append(organic)
-//                resultModel?.addToOrganicLinks(organic)
-//            }
-//
-//            print(organicModelArray.count)
-//
-//            saveData()
-            
-            let vc = DisplayResultsController()
-            vc.title = researchName
-            vc.delegate = self
-//            vc.links = organicModelArray
-//            vc.images = imageModelArray
-//            vc.videos = videoModelArray
-            vc.testArray = testArray
+//            vc.testArray = testArray
         
             //set view pager back after tesing pdf view
-            let vc2 = SegmentedViewController()
-
-//            navigationController?.pushViewController(vc2, animated: true)
             
 //        }
     }
@@ -269,7 +209,12 @@ class AddResearchController: UIViewController, UITextFieldDelegate{
     }
 }
 
-extension AddResearchController: dataPassedBetweenControllers, pdfDataGottenFromSendingView {
+extension AddResearchController: dataPassedBetweenControllers, pdfDataGottenFromSendingView, SegmentedControllerDataSource {
+    
+    func sendBackData() {
+        
+    }
+    
     
     func sendBackToParent(testArray: [Int]) {
         print(testArray)

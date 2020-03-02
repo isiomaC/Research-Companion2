@@ -52,10 +52,12 @@ class MenuViewController: UIViewController{
         initializeTable()
         createMenuItem()
         navigationItem.title = "Menu"
-        navigationController?.navigationBar.backgroundColor = .systemRed
-        navigationController?.navigationBar.tintColor = .systemGray
+        navigationController?.navigationBar.backgroundColor = .systemBlue
+        navigationController?.navigationBar.tintColor = .lightGray
+
+        navigationController?.navigationBar.tintColor = UIColor.lightGray
         navigationController?.navigationBar.isTranslucent = true
-        
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         
         //change Menu views bg color here
 //        view.backgroundColor = UIColor.black

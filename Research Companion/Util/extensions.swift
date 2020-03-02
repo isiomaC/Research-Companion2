@@ -32,6 +32,28 @@ extension UIView {
         }
         
     }
+    
+    
+    func constrain(top: NSLayoutYAxisAnchor?, topConstant: CGFloat?, bottom: NSLayoutYAxisAnchor?, bottomConstant: CGFloat?, leading: NSLayoutXAxisAnchor?, leadingConstant: CGFloat?, trailing: NSLayoutXAxisAnchor?, trailingConstant: CGFloat?){
+        
+            self.translatesAutoresizingMaskIntoConstraints = false
+              
+            if let leadingAnchor = leading, let leadC = leadingConstant {
+                  self.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leadC).isActive = true
+            }
+              
+            if let trailingAnchor = trailing, let trailC = trailingConstant {
+                  self.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -trailC).isActive = true
+            }
+              
+            if let topAnchor = top, let topC = topConstant {
+                 self.topAnchor.constraint(equalTo: topAnchor, constant: topC).isActive = true
+            }
+              
+            if let bottomAnchor = bottom, let bottomC = bottomConstant {
+                 self.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -bottomC).isActive = true
+            }
+      }
 }
 
 extension UIImage {
@@ -42,4 +64,30 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage!
     }
+}
+
+
+class MyCollectionView: UICollectionView{
+   
+    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
+        
+        self.clearsContextBeforeDrawing = false
+        self.backgroundColor = .white
+        self.isScrollEnabled = true
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+
+
+struct Artik{
+    var title: String
+    var abstract: String
+    var date: String
 }

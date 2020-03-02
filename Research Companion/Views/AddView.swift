@@ -155,7 +155,7 @@ class AddView: UIView{
         let btn = UIButton( frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         btn.clipsToBounds = true
         btn.setTitle("Add", for: .normal)
-        btn.backgroundColor = UIColor(red: 162/255, green: 132/255, blue: 94/255, alpha: 0.9)
+        btn.backgroundColor = .systemBlue
         btn.layer.cornerRadius = 10
         btn.tag = 0
         return btn

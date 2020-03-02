@@ -11,25 +11,30 @@ import UIKit
 
 class TabBar: UITabBarController, UITabBarControllerDelegate {
     
+    static let shared: TabBar = {
+        let instance = TabBar()
+        return instance
+    }()
+    
+    var tabBarHeight: CGFloat? = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-
+        
+        tabBarHeight = tabBar.frame.height
+       
         self.tabBar.isTranslucent = true
         
         let homeController = ViewController()
         let homeTabIcon = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         homeController.tabBarItem = homeTabIcon
         
-        let sentimentController = SentimentViewController()
-        let sentimentTabIcon = UITabBarItem(title: "Sentiment", image: UIImage(systemName: "circle.grid.hex.fill"), tag: 1)
-        sentimentController.tabBarItem = sentimentTabIcon
-        
         let menuController = MenuViewController()
         let menuTabIcon = UITabBarItem(title: "Menu", image: UIImage(systemName:"text.justifyright"), tag: 2)
         menuController.tabBarItem = menuTabIcon
         
-        let tabControllers = [homeController, sentimentController, menuController]
+        let tabControllers = [homeController, menuController]
         self.viewControllers = tabControllers.map({ (viewController) in
             UINavigationController(rootViewController: viewController)
         })

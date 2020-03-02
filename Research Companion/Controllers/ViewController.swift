@@ -8,48 +8,123 @@
 
 import UIKit
 import SideMenu
+import JJFloatingActionButton
 
 let menuScreenOffset = screenSize.width/4
 let menuScreenSize = screenSize.width - menuScreenOffset
 
-class ViewController: UIViewController {
+class ViewController: MyViewController {
     
-    var myView: HomeView?
+    let cellId = "cellID"
+    var data : [Artik]?
+    
+     var myCollection: MyCollectionView?
+    
+    lazy var floatingAction : JJFloatingActionButton = {
+        let act = JJFloatingActionButton()
+        act.translatesAutoresizingMaskIntoConstraints = false
+        act.buttonDiameter = 65   //button size
+        act.buttonColor = .systemBlue
+        act.buttonImageSize = CGSize(width: 25, height: 25)   //base button size
+        
+//        act.buttonAnimationConfiguration = .transition(toImage: UIImage(systemName: "paperclip.circle")!)   //change image of base button on tap
+        
+        act.itemAnimationConfiguration = .slideIn()
+        act.configureDefaultItem { (item) in
+            item.titlePosition = .top
+            item.titleLabel.font = .boldSystemFont(ofSize: UIFont.smallSystemFontSize)
+            item.buttonImageColor = .systemBlue
+            item.highlightedButtonColor = .darkGray
+        }
+        
+        act.addItem(title: "Add", image: UIImage(systemName:
+            "plus")?.withRenderingMode(.alwaysTemplate)) { (item) in
+                print("Add tapped")
+        }
+        
+        act.addItem(title: "View", image: UIImage(systemName: "return")?.withRenderingMode(.alwaysTemplate)) { (item) in
+                print("View tapped")
+        }
+        
+        return act
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        myView = HomeView()
-        myView?.addButton.addTarget(self, action: #selector(newResource), for: .touchUpInside)
-               
-        view = myView
         navigationItem.title = "Companion"
+        setUpMyCollectionView()
+        view.addSubview(myCollection!)
+        view.addSubview(floatingAction)
         
+        floatingAction.items.forEach { (item) in
+            if item.titleLabel.text == "Add" {
+                item.addTarget(self, action: #selector(self.newResource), for: .touchUpInside)
+            }
+        }
+        addFloatingActionConstraints()
+        setUpNavigationController()
         
-        let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(openFavorites))
+        //MARK:- Removed Home View and replaced with JJFloating Action button..
+//        myView = HomeView()
+//        myView?.addButton.addTarget(self, action: #selector(newResource), for: .touchUpInside)
+//        view = myView
+    }
+    
+    func addFloatingActionConstraints(){
+        floatingAction.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        floatingAction.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+    }
+    
+    func getArtikArray()-> [Artik]{
+        let art = Artik(title: "Machine Learning", abstract: "Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsume", date: "2019")
         
-        let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "square.stack"), style: .plain, target: self, action: #selector(openMenu))
+        let art2 = Artik(title: "Artificial Intelligence ", abstract: "Another abstract that wukk eb short and not useful, because i know this", date: "2020")
+        
+        let art3 =  Artik(title: "Quantum Intelligence ", abstract: "Another abstract that wukk eb short and not useful, because i know this", date: "1997")
+        
+        let art4 =  Artik(title: "Physics Body ", abstract: "Another abstract that wukk eb short and not useful, because i know this", date: "1653")
+        
+        return [art,art2, art3, art4 ]
+    }
+    
+    func setUpMyCollectionView(){
+        let flowLayout : UICollectionViewFlowLayout = {
+           let layout = UICollectionViewFlowLayout()
+           layout.scrollDirection = .vertical
+           layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+            
+            //ESTIMATED item size is 220.79
+           layout.estimatedItemSize = CGSize(width: screenSize.width - 10, height: screenSize.height*0.3)
 
-        navigationItem.rightBarButtonItem = rightBarButton
-        navigationItem.leftBarButtonItem = leftBarButton
+           layout.minimumInteritemSpacing = 10
+           return layout
+        }()
         
-//        navigationController?.navigationBar.barTintColor = .black
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor = UIColor.lightGray
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
-    
+        let col = MyCollectionView(frame: screenSize, collectionViewLayout: flowLayout)
+        col.register(CollectionCell.self, forCellWithReuseIdentifier: cellId)
+        col.delegate = self
+        col.dataSource = self
+        data = getArtikArray()
+        myCollection = col
+       
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func setUpNavigationController(){
+         let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "bookmark.fill"), style: .plain, target: self, action: #selector(openFavorites))
+                
+         let leftBarButton = UIBarButtonItem(image: UIImage(systemName: "square.stack"), style: .plain, target: self, action: #selector(openMenu))
+
+         navigationItem.rightBarButtonItem = rightBarButton
+         navigationItem.leftBarButtonItem = leftBarButton
+                
+        //if isTranslucent=false then use bartintcolor property, if =true use backgroundcolor property
         
-        view.isHidden = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        view.isHidden = true
+//                navigationController?.navigationBar.barTintColor = .blue
+         navigationController?.navigationBar.backgroundColor = .systemBlue
+         navigationController?.navigationBar.isTranslucent = true
+         navigationController?.navigationBar.tintColor = UIColor.lightGray
+         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
     }
     
     @objc func newResource(){
@@ -59,6 +134,7 @@ class ViewController: UIViewController {
     @objc func openFavorites(){
         navigationController?.pushViewController(FavoritesViewController(), animated: true)
     }
+    
     
     @objc func openMenu(){
 //        let menu = SideMenuNavigationController(rootViewController: MenuViewController())
@@ -81,3 +157,27 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController :UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+           
+        if let dat = data{
+               return dat.count
+           }else {
+               return 3
+           }
+       }
+
+       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+           
+           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CollectionCell
+           
+           cell.tag = indexPath.row
+           cell.titleLabel.text = data![indexPath.row].title
+           cell.abstractLabel.text = data![indexPath.row].abstract
+//                                     data![indexPath.row].date
+           return cell
+           
+       }
+
+    
+}
